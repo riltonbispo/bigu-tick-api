@@ -5,6 +5,8 @@ import cors from 'cors'
 import http from 'http'
 import publicRoutes from './routes/public'
 import userRoutes from './routes/auth'
+import tasksRoutes from './routes/tasks'
+import usersRoutes from './routes/users'
 import { requestMiddleware } from './middleware/request'
 import { errorMiddleware } from './middleware/error'
 
@@ -15,6 +17,8 @@ app.use(express.json())
 app.all('*', requestMiddleware)
 app.use('/', publicRoutes)
 app.use('/auth', userRoutes)
+app.use('/users', usersRoutes)
+app.use('/tasks', tasksRoutes)
 app.use(errorMiddleware)
 
 const runServer = (port: number, server: http.Server) => {
