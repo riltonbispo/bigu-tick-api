@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express'
-import { PrismaClient } from '@prisma/client'
+import { prismaModel } from '../utils/prismaModel'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { signupSchema, signinSchema } from '../schema/user.schema'
@@ -9,8 +9,6 @@ import {
   UnauthorizedError,
 } from '../utils/api-errors'
 
-const prisma = new PrismaClient()
-
 export const signup: RequestHandler = async (req, res) => {
   const body = signupSchema.safeParse(req.body)
 
@@ -18,7 +16,7 @@ export const signup: RequestHandler = async (req, res) => {
 
   const { email, password, name } = body.data
 
-  const existingUser = await prisma.user.findUnique({
+  const existingUser = await prismaModel.user.findUnique({
     where: {
       email,
     },
@@ -30,7 +28,7 @@ export const signup: RequestHandler = async (req, res) => {
 
   const passwordHash = await bcrypt.hash(password, 10)
 
-  const newUser = await prisma.user.create({
+  const newUser = await prismaModel.user.create({
     data: {
       name,
       email,
@@ -52,7 +50,7 @@ export const signin: RequestHandler = async (req, res) => {
 
   const { email, password } = body.data
 
-  const user = await prisma.user.findUnique({
+  const user = await prismaModel.user.findUnique({
     where: {
       email,
     },

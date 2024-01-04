@@ -1,10 +1,8 @@
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { prismaModel } from '../utils/prismaModel'
 
 export const getAll = async () => {
   try {
-    return await prisma.user.findMany({
+    return await prismaModel.user.findMany({
       select: {
         id: true,
         email: true,
@@ -18,7 +16,7 @@ export const getAll = async () => {
 
 export const getOne = async (id: number) => {
   try {
-    return await prisma.user.findFirst({
+    return await prismaModel.user.findFirst({
       where: {
         id,
       },
