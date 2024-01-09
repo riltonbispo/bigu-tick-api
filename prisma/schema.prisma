@@ -13,23 +13,25 @@ model User {
   email    String @unique
   password String
 
-  TaskAssignment TaskAssignment[]
+  tasks TaskAssignment[]
 }
 
 model Task {
   id          Int     @id @default(autoincrement())
   title       String
   description String
-  completed   Boolean
+  completed   Boolean @default(false)
 
-  TaskAssignment TaskAssignment[]
+  users TaskAssignment[]
 }
 
 model TaskAssignment {
-  id          Int @id @default(autoincrement())
-  user_id     Int
-  task_id     Int
+  id      Int @id @default(autoincrement())
+  user_id Int
+  task_id Int
 
   user User @relation(fields: [user_id], references: [id])
   task Task @relation(fields: [task_id], references: [id])
+
+  @@unique([user_id, task_id])
 }
