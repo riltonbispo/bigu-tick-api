@@ -1,9 +1,9 @@
 import { TaskCreateType, TaskUpdateType } from '../types/types'
-import { prismaModel } from '../utils/prismaModel'
+import { prisma } from '../database/client'
 
 export const getAll = async () => {
   try {
-    return await prismaModel.task.findMany()
+    return await prisma.task.findMany()
   } catch (error) {
     return false
   }
@@ -11,7 +11,7 @@ export const getAll = async () => {
 
 export const getOne = async (id: number) => {
   try {
-    return await prismaModel.task.findFirst({ where: { id } })
+    return await prisma.task.findFirst({ where: { id } })
   } catch (error) {
     return false
   }
@@ -19,7 +19,7 @@ export const getOne = async (id: number) => {
 
 export const add = async (data: TaskCreateType) => {
   try {
-    return await prismaModel.task.create({ data })
+    return await prisma.task.create({ data })
   } catch (error) {
     return false
   }
@@ -27,7 +27,7 @@ export const add = async (data: TaskCreateType) => {
 
 export const update = async (id: number, data: TaskUpdateType) => {
   try {
-    return await prismaModel.task.update({
+    return await prisma.task.update({
       where: { id },
       data,
     })
@@ -38,7 +38,7 @@ export const update = async (id: number, data: TaskUpdateType) => {
 
 export const del = async (id: number) => {
   try {
-    return await prismaModel.task.delete({ where: { id } })
+    return await prisma.task.delete({ where: { id } })
   } catch (error) {
     return false
   }

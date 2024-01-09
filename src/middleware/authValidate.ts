@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express'
 import { UnauthorizedError } from '../utils/api-errors'
-import { prismaModel } from '../utils/prismaModel'
+import { prisma } from '../database/client'
 import jwt from 'jsonwebtoken'
 
 type JwtPayload = {
@@ -15,7 +15,7 @@ export const authValidade: RequestHandler = async (req, res, next) => {
 
   const { id } = jwt.verify(token, process.env.JWT_PASS ?? '') as JwtPayload
 
-  const user = await prismaModel.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: {
       id,
     },
