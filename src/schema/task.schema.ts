@@ -7,6 +7,7 @@ export const createTaskSchema = z.object({
     .max(20, { message: 'Maximo 20 digitos para o titulo' }),
   description: z.string(),
   completed: z.boolean(),
+  users: z.number().array().optional(),
 })
 
 export const updateTaskSchema = z.object({

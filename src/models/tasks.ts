@@ -19,7 +19,18 @@ export const getOne = async (id: number) => {
 
 export const add = async (data: TaskCreateType) => {
   try {
-    return await prisma.task.create({ data })
+    const usersIds = data.users
+    const { completed, description, title } = data
+    return await prisma.task.create({
+      data: {
+        completed,
+        description,
+        title,
+        users: {
+          connect: usersIds ? usersIds.map((id) => ({ id })) : [],
+        },
+      },
+    })
   } catch (error) {
     return false
   }
