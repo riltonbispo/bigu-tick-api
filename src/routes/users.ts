@@ -7,5 +7,6 @@ const router = Router()
 router.use(authValidade)
 router.get('/', user.getAll)
 router.get('/:id', user.getUser)
+router.get('/:id/tasks', user.getUserTasks)
 
 export default router

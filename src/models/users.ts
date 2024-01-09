@@ -30,3 +30,22 @@ export const getOne = async (id: number) => {
     return false
   }
 }
+
+export const getTasks = async (id: number) => {
+  try {
+    const tasks = await prisma.taskAssignment.findMany({
+      where: {
+        user_id: id,
+      },
+      include: {
+        task: true,
+      },
+    })
+
+    const result = tasks.map((assignment) => assignment.task)
+
+    return result || []
+  } catch (error) {
+    return false
+  }
+}
