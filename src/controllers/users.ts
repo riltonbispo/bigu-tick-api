@@ -21,6 +21,6 @@ export const getUserTasks: RequestHandler = async (req, res) => {
   const { id } = req.params
   const result = await user.getTasks(parseInt(id))
 
-  if (result) return res.json({ tasks: result })
+  if (result) return res.json({ result })
   throw new BadRequestError('Usuario nao encontrado')
 }
