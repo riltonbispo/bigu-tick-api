@@ -5,17 +5,17 @@ import { updateUserSchema } from '../schema/user.schema'
 import { verifyToken } from '../middleware/authValidate'
 
 export const getAll: RequestHandler = async (req, res) => {
-  const result = await user.getAll()
+  const data = await user.getAll()
 
-  if (result) return res.json({ users: result })
+  if (data) return res.json({ data })
   throw new BadRequestError('Erro na busca de usuarios')
 }
 
 export const getUser: RequestHandler = async (req, res) => {
   const { id } = req.params
-  const result = await user.getOne(parseInt(id))
+  const data = await user.getOne(parseInt(id))
 
-  if (result) return res.json({ user: result })
+  if (data) return res.json({ data })
   throw new BadRequestError('Usuario nao encontrado')
 }
 
@@ -24,16 +24,16 @@ export const updateUser: RequestHandler = async (req, res) => {
   if (!body.success) throw new BadRequestError('Dados Invalidos')
   const id = verifyToken(req.headers.authorization)
 
-  const result = await user.update(id, body.data)
-  if (!result) throw new BadRequestError('User nao encontrado')
+  const data = await user.update(id, body.data)
+  if (!data) throw new BadRequestError('User nao encontrado')
 
-  res.status(202).json({ user: result })
+  res.status(202).json({ data })
 }
 
 export const getUserTasks: RequestHandler = async (req, res) => {
   const { id } = req.params
-  const result = await user.getTasks(parseInt(id))
+  const data = await user.getTasks(parseInt(id))
 
-  if (result) return res.json({ result })
+  if (data) return res.json({ data })
   throw new BadRequestError('Usuario nao encontrado')
 }

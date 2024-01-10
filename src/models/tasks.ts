@@ -3,7 +3,16 @@ import { prisma } from '../database/client'
 
 export const getAll = async () => {
   try {
-    return await prisma.task.findMany()
+    return await prisma.task.findMany({
+      include: {
+        users: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    })
   } catch (error) {
     return false
   }
@@ -11,7 +20,17 @@ export const getAll = async () => {
 
 export const getOne = async (id: number) => {
   try {
-    return await prisma.task.findFirst({ where: { id } })
+    return await prisma.task.findFirst({
+      where: { id },
+      include: {
+        users: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    })
   } catch (error) {
     return false
   }
