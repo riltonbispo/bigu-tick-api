@@ -38,11 +38,23 @@ export const add = async (data: TaskCreateType) => {
 
 export const update = async (id: number, data: TaskUpdateType) => {
   try {
+    const { users, completed, description, title } = data
+    const hasUserToLink = !!(users && users.length > 0)
+    const updateData = {
+      completed,
+      description,
+      title,
+      users: hasUserToLink
+        ? { connect: users.map((id) => ({ id })) }
+        : { set: [] },
+    }
+
     return await prisma.task.update({
       where: { id },
-      data,
+      data: updateData,
     })
   } catch (error) {
+    console.error('Error updating task:', error)
     return false
   }
 }

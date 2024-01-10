@@ -18,4 +18,5 @@ export const updateTaskSchema = z.object({
     .optional(),
   description: z.string().optional(),
   completed: z.boolean().optional(),
+  users: z.number().array().optional(),
 })

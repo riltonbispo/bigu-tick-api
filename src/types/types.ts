@@ -1,8 +1,9 @@
-import { Prisma } from '@prisma/client'
-import { prisma } from '../database/client'
-import { createTaskSchema } from '../schema/task.schema'
+import { createTaskSchema, updateTaskSchema } from '../schema/task.schema'
 import { z } from 'zod'
+import { updateUserSchema } from '../schema/user.schema'
 
 export type TaskCreateType = z.infer<typeof createTaskSchema>
 
-export type TaskUpdateType = Prisma.Args<typeof prisma.task, 'update'>['data']
+export type TaskUpdateType = z.infer<typeof updateTaskSchema>
+
+export type UserUpdateType = z.infer<typeof updateUserSchema>
