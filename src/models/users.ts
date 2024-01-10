@@ -1,4 +1,5 @@
 import { prisma } from '../database/client'
+import { UserUpdateType } from '../types/types'
 
 export const getAll = async () => {
   try {
@@ -25,6 +26,23 @@ export const getOne = async (id: number) => {
         email: true,
         name: true,
       },
+    })
+  } catch (error) {
+    return false
+  }
+}
+
+export const update = async (id: number, data: UserUpdateType) => {
+  try {
+    return await prisma.user.update({
+      where: {
+        id,
+      },
+      select: {
+        email: true,
+        name: true,
+      },
+      data,
     })
   } catch (error) {
     return false
